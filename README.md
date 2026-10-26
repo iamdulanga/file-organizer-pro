@@ -122,5 +122,5 @@ This project is licensed under the MIT License.
 
 ## 👤 Author
 
-Developed by **Dulanga Niroshan Dasanayake**  
+Developed by **Dulanga Dasanayake**  
 GitHub: [@iamdulanga](https://github.com/iamdulanga)
