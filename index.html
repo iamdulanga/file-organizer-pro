@@ -3,16 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>File Organizer Pro — Fast, Safe & Cross-Platform Desktop File Sorter</title>
-    <meta name="description" content="A modern, high-speed, open-source desktop application that automatically categorizes files with background multithreading, collision protection, and undo support.">
-    <meta name="keywords" content="file organizer, file sorter, desktop app, python, tkinter, cross platform, open source, windows, macos, linux">
+    <title>File Organizer Pro — Free Desktop File Sorter & Folder Cleaner</title>
+    
+    <!-- Core SEO Meta Tags -->
+    <meta name="description" content="Free, open-source desktop file organizer for Windows, macOS, and Linux. Automatically sort folders by file extension with duplicate collision protection, background multithreading, and 1-click undo.">
+    <meta name="keywords" content="file organizer, desktop file sorter, folder organizer, organize downloads folder, sort files by extension, duplicate file collision, python file organizer, free file organizer windows mac linux, batch file organizer, desktop cleaning tool, open source file sorter">
     <meta name="author" content="Dulanga Niroshan Dasanayake">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow">
+    <link rel="canonical" href="https://iamdulanga.github.io/file-organizer-pro/">
 
-    <!-- Open Graph / Social Media -->
-    <meta property="og:title" content="File Organizer Pro — Open Source Desktop Sorter">
-    <meta property="og:description" content="Tame cluttered folders instantly. Built for Windows, macOS, and Linux. Free & Open Source.">
+    <!-- Theme & App Icons -->
+    <meta name="theme-color" content="#0A0D14">
+    <meta name="color-scheme" content="dark">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="apple-touch-icon" href="favicon.svg">
+
+    <!-- Open Graph / Facebook / LinkedIn -->
     <meta property="og:type" content="website">
+    <meta property="og:site_name" content="File Organizer Pro">
+    <meta property="og:title" content="File Organizer Pro — Fast, Safe & Cross-Platform Desktop File Sorter">
+    <meta property="og:description" content="Tame cluttered folders instantly. 100% Free & Open Source native desktop app for Windows, macOS, and Linux with 1-click undo and zero overwrites.">
     <meta property="og:url" content="https://iamdulanga.github.io/file-organizer-pro/">
+    <meta property="og:image" content="https://iamdulanga.github.io/file-organizer-pro/og-image.svg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="File Organizer Pro — Fast, Safe & Cross-Platform Desktop File Sorter">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@iamdulanga">
+    <meta name="twitter:creator" content="@iamdulanga">
+    <meta name="twitter:title" content="File Organizer Pro — Free Desktop File Sorter & Folder Cleaner">
+    <meta name="twitter:description" content="Clean messy downloads and folders in seconds. Native desktop application with safe duplicate protection and 1-click undo.">
+    <meta name="twitter:image" content="https://iamdulanga.github.io/file-organizer-pro/og-image.svg">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,6 +46,104 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="style.css">
+
+    <!-- Schema.org JSON-LD Structured Data for Google Rich Results -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "SoftwareApplication",
+          "@id": "https://iamdulanga.github.io/file-organizer-pro/#software",
+          "name": "File Organizer Pro",
+          "applicationCategory": "UtilitiesApplication",
+          "operatingSystem": "Windows 10, Windows 11, macOS 11+, Linux",
+          "softwareVersion": "2.1.0",
+          "description": "A high-speed, native desktop application that automatically organizes files into categorized folders with duplicate collision protection and one-click undo.",
+          "offers": {
+            "@type": "Offer",
+            "price": "0.00",
+            "priceCurrency": "USD"
+          },
+          "downloadUrl": "https://github.com/iamdulanga/file-organizer-pro/releases/latest",
+          "author": {
+            "@type": "Person",
+            "name": "Dulanga Niroshan Dasanayake",
+            "url": "https://github.com/iamdulanga"
+          },
+          "featureList": [
+            "Automatic file categorization by extension",
+            "Safe duplicate collision protection (never overwrites)",
+            "Non-blocking background multithreading engine",
+            "1-Click instant undo restoration",
+            "100% offline and privacy-first (no internet telemetry)",
+            "Native cross-platform UI for Windows, macOS, and Linux"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://iamdulanga.github.io/file-organizer-pro/#website",
+          "url": "https://iamdulanga.github.io/file-organizer-pro/",
+          "name": "File Organizer Pro",
+          "description": "Free, open-source desktop file sorter and folder organizer for Windows, macOS, and Linux."
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://iamdulanga.github.io/file-organizer-pro/#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Is File Organizer Pro really 100% free and open-source?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, File Organizer Pro is released under the permissive MIT License. It is completely free for both personal and commercial use with zero ads, subscriptions, or telemetry."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Will File Organizer Pro delete or overwrite any of my existing files?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Never. File Organizer Pro features built-in duplicate collision protection. If a file with an identical name already exists in the destination folder, it automatically appends an index like file (1).ext so no files are ever overwritten or lost."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Do I need to install Python to run File Organizer Pro?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. Standalone pre-compiled executable binaries are available for Windows (.exe), macOS (.app), and Linux. You only need Python 3.10+ if you wish to run or build directly from source code."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Can I undo the organization if files were moved by mistake?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. File Organizer Pro includes a 1-Click Instant Undo feature that remembers the original paths of all sorted files and safely moves them back to their prior locations."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Does File Organizer Pro send my data or file names to the internet?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. File Organizer Pro runs entirely offline on your computer. It performs all operations locally and contains zero network requests, analytics, or cloud uploads."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Which operating systems are supported?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "File Organizer Pro supports Windows (10 and 11), macOS (Intel and Apple Silicon), and all major Linux distributions (Ubuntu, Debian, Fedora, Arch)."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
 </head>
 <body>
     <!-- Ambient Background Lighting -->
@@ -33,7 +156,7 @@
         <header class="navbar" id="main-nav">
             <div class="nav-brand">
                 <div class="brand-icon">
-                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                         <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
                         <polyline points="12 11 12 17"></polyline>
                         <polyline points="9 14 12 17 15 14"></polyline>
@@ -45,11 +168,14 @@
                 </div>
             </div>
 
-            <nav class="nav-links">
+            <nav class="nav-links" aria-label="Main Navigation">
+                <a href="#how-it-works" class="nav-link">How It Works</a>
                 <a href="#features" class="nav-link">Features</a>
-                <a href="https://github.com/iamdulanga/file-organizer-pro/releases/latest" target="_blank" rel="noopener" class="nav-link">Releases</a>
-                <a href="https://github.com/iamdulanga/file-organizer-pro" target="_blank" rel="noopener" class="nav-btn-gh" id="nav-github-link">
-                    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                <a href="#categories" class="nav-link">Categories</a>
+                <a href="#download" class="nav-link">Download</a>
+                <a href="#faq" class="nav-link">FAQ</a>
+                <a href="https://github.com/iamdulanga/file-organizer-pro" target="_blank" rel="noopener" class="nav-btn-gh" id="nav-github-link" title="View Source Code on GitHub">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
                         <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
                     </svg>
                     <span>Star on GitHub</span>
@@ -135,7 +261,7 @@
                 </div>
 
                 <!-- Feature Pill Badges -->
-                <div class="features-pills" id="features">
+                <div class="features-pills" id="quick-features">
                     <div class="feature-tag">
                         <span class="ft-icon">🛡️</span>
                         <span>Zero Overwrites</span>
@@ -251,7 +377,362 @@
             </div>
         </main>
 
-        <!-- Compact Bottom Bar -->
+        <!-- -------------------------------------------------------------
+             Section 1: How It Works (Step-by-step)
+        -------------------------------------------------------------- -->
+        <section class="page-section" id="how-it-works">
+            <div class="section-header">
+                <span class="section-badge">Simple & Intuitive</span>
+                <h2 class="section-title">Organize Folders in 3 Easy Steps</h2>
+                <p class="section-desc">Clean up thousands of messy files in your Downloads, Desktop, or hard drives in seconds without any complex configuration.</p>
+            </div>
+
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">01</div>
+                    <h3>Choose Your Folder</h3>
+                    <p>Select any cluttered folder on your computer — such as Downloads, Desktop, or external storage drives. File Organizer Pro prepares a safe index of every item.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">02</div>
+                    <h3>Run Auto-Sorting</h3>
+                    <p>Click Organize. The non-blocking multithreaded engine automatically groups files by extension into dedicated folders like Images, Documents, Videos, and Code.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">03</div>
+                    <h3>Zero Overwrites & Undo</h3>
+                    <p>Collisions are safely renamed to prevent data loss. If you ever change your mind, hit 1-Click Undo to restore every file back to its exact prior location.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- -------------------------------------------------------------
+             Section 2: Core Features
+        -------------------------------------------------------------- -->
+        <section class="page-section" id="features">
+            <div class="section-header">
+                <span class="section-badge">Engineered for Safety</span>
+                <h2 class="section-title">Built for Performance, Precision & Privacy</h2>
+                <p class="section-desc">Every line of code is optimized for maximum reliability and file safety so you never have to worry about missing or corrupted data.</p>
+            </div>
+
+            <div class="features-grid-cards">
+                <article class="feature-card">
+                    <div class="card-icon-box">🛡️</div>
+                    <h3>Zero Overwrites & Collision Guard</h3>
+                    <p>Never lose a file again. If a destination file already exists with identical name, File Organizer Pro automatically renames it (e.g. <code>report (1).pdf</code>) to guarantee complete data safety.</p>
+                </article>
+
+                <article class="feature-card">
+                    <div class="card-icon-box">⚡</div>
+                    <h3>Background Multithreaded Engine</h3>
+                    <p>Scanning and transferring files runs in dedicated background threads. Even with 10,000+ files, your user interface remains responsive with real-time progress updates.</p>
+                </article>
+
+                <article class="feature-card">
+                    <div class="card-icon-box">↩️</div>
+                    <h3>1-Click Instant Restoration</h3>
+                    <p>Full transaction memory tracks every file move. Made a mistake? Click "Undo Move" anytime to instantly send all files back to their exact original directories.</p>
+                </article>
+
+                <article class="feature-card">
+                    <div class="card-icon-box">🔒</div>
+                    <h3>100% Offline & Private</h3>
+                    <p>Zero internet connections, zero trackers, and zero telemetry. File Organizer Pro operates entirely offline on your local machine to keep your private files secure.</p>
+                </article>
+
+                <article class="feature-card">
+                    <div class="card-icon-box">💻</div>
+                    <h3>Native Look on Windows, Mac & Linux</h3>
+                    <p>Built with native platform themes — Segoe UI on Windows, Aqua on macOS, and GTK on Linux — offering a lightweight, beautiful experience that feels right at home.</p>
+                </article>
+
+                <article class="feature-card">
+                    <div class="card-icon-box">📝</div>
+                    <h3>Automated Activity Logging</h3>
+                    <p>Maintains transparent audit logs of every scanned, categorized, and moved file in your home directory with a convenient one-click log viewer.</p>
+                </article>
+            </div>
+        </section>
+
+        <!-- -------------------------------------------------------------
+             Section 3: Supported Categories & Extensions (High SEO Keyword Value)
+        -------------------------------------------------------------- -->
+        <section class="page-section" id="categories">
+            <div class="section-header">
+                <span class="section-badge">File Format Coverage</span>
+                <h2 class="section-title">14+ File Categories Supported</h2>
+                <p class="section-desc">File Organizer Pro automatically identifies and categorizes virtually every mainstream file format instantly.</p>
+            </div>
+
+            <div class="categories-grid">
+                <div class="category-card">
+                    <div class="cat-header">
+                        <span class="cat-icon">🖼️</span>
+                        <span class="cat-title">Images</span>
+                    </div>
+                    <span class="cat-exts">.jpg .jpeg .png .gif .bmp .svg .tiff .ico .webp .heif .avif</span>
+                </div>
+
+                <div class="category-card">
+                    <div class="cat-header">
+                        <span class="cat-icon">📄</span>
+                        <span class="cat-title">Documents</span>
+                    </div>
+                    <span class="cat-exts">.pdf .docx .doc .txt .pptx .ppt .xls .xlsx .csv .rtf .odt .ods .odp</span>
+                </div>
+
+                <div class="category-card">
+                    <div class="cat-header">
+                        <span class="cat-icon">🎬</span>
+                        <span class="cat-title">Videos</span>
+                    </div>
+                    <span class="cat-exts">.mp4 .mov .avi .mkv .flv .wmv .webm .mpeg .3gp</span>
+                </div>
+
+                <div class="category-card">
+                    <div class="cat-header">
+                        <span class="cat-icon">🎵</span>
+                        <span class="cat-title">Music & Audio</span>
+                    </div>
+                    <span class="cat-exts">.mp3 .wav .aac .flac .ogg .m4a .wma .opus</span>
+                </div>
+
+                <div class="category-card">
+                    <div class="cat-header">
+                        <span class="cat-icon">📦</span>
+                        <span class="cat-title">Archives & Compressed</span>
+                    </div>
+                    <span class="cat-exts">.zip .rar .tar .gz .7z .bz2 .xz .cab .iso</span>
+                </div>
+
+                <div class="category-card">
+                    <div class="cat-header">
+                        <span class="cat-icon">💻</span>
+                        <span class="cat-title">Source Code</span>
+                    </div>
+                    <span class="cat-exts">.c .cpp .h .hpp .java .cs .go .ts .rs .kt .dart .html .css .json .xml .sql</span>
+                </div>
+
+                <div class="category-card">
+                    <div class="cat-header">
+                        <span class="cat-icon">⚙️</span>
+                        <span class="cat-title">Scripts & Automation</span>
+                    </div>
+                    <span class="cat-exts">.py .js .sh .bat .rb .php .pl .lua .swift .ps1</span>
+                </div>
+
+                <div class="category-card">
+                    <div class="cat-header">
+                        <span class="cat-icon">🚀</span>
+                        <span class="cat-title">Executables & Installers</span>
+                    </div>
+                    <span class="cat-exts">.exe .msi .dmg .apk .appimage</span>
+                </div>
+
+                <div class="category-card">
+                    <div class="cat-header">
+                        <span class="cat-icon">🔤</span>
+                        <span class="cat-title">Fonts</span>
+                    </div>
+                    <span class="cat-exts">.ttf .otf .woff .woff2</span>
+                </div>
+
+                <div class="category-card">
+                    <div class="cat-header">
+                        <span class="cat-icon">💾</span>
+                        <span class="cat-title">Databases</span>
+                    </div>
+                    <span class="cat-exts">.sqlite .db .mdb .accdb</span>
+                </div>
+
+                <div class="category-card">
+                    <div class="cat-header">
+                        <span class="cat-icon">🎨</span>
+                        <span class="cat-title">3D Models</span>
+                    </div>
+                    <span class="cat-exts">.obj .stl .fbx .gltf .blend</span>
+                </div>
+
+                <div class="category-card">
+                    <div class="cat-header">
+                        <span class="cat-icon">💿</span>
+                        <span class="cat-title">Disk Images</span>
+                    </div>
+                    <span class="cat-exts">.img .bin .vhd .vmdk</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- -------------------------------------------------------------
+             Section 4: Download Hub
+        -------------------------------------------------------------- -->
+        <section class="page-section" id="download">
+            <div class="section-header">
+                <span class="section-badge">Get Started</span>
+                <h2 class="section-title">Download File Organizer Pro</h2>
+                <p class="section-desc">Standalone, zero-dependency executable binaries for all major desktop platforms. No installation or Python setup required.</p>
+            </div>
+
+            <div class="downloads-grid">
+                <div class="download-card">
+                    <div class="dl-os-icon">
+                        <svg viewBox="0 0 24 24" width="32" height="32" fill="currentColor">
+                            <path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/>
+                        </svg>
+                    </div>
+                    <h3 class="dl-os-name">Windows</h3>
+                    <p class="dl-os-specs">Windows 10, 11 (64-bit)<br>Standalone .exe • No install</p>
+                    <a href="https://github.com/iamdulanga/file-organizer-pro/releases/latest" class="dl-btn" target="_blank" rel="noopener">
+                        <span>Download for Windows</span>
+                    </a>
+                </div>
+
+                <div class="download-card">
+                    <div class="dl-os-icon">
+                        <svg viewBox="0 0 24 24" width="32" height="32" fill="currentColor">
+                            <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.37c.61-.75 1.04-1.8 0.92-2.85-.9.04-2 .6-2.63 1.34-.56.64-1.04 1.71-.91 2.74 1.01.08 2.02-.48 2.62-1.23z"/>
+                        </svg>
+                    </div>
+                    <h3 class="dl-os-name">macOS</h3>
+                    <p class="dl-os-specs">macOS 11+ Big Sur / Monterey / Sonoma<br>Universal .app / .zip</p>
+                    <a href="https://github.com/iamdulanga/file-organizer-pro/releases/latest" class="dl-btn" target="_blank" rel="noopener">
+                        <span>Download for macOS</span>
+                    </a>
+                </div>
+
+                <div class="download-card">
+                    <div class="dl-os-icon">
+                        <svg viewBox="0 0 24 24" width="32" height="32" fill="currentColor">
+                            <path d="M12 2a5 5 0 0 0-5 5v3a5 5 0 0 0 10 0V7a5 5 0 0 0-5-5zm0 14c-4.42 0-8 2.24-8 5v1h16v-1c0-2.76-3.58-5-8-5z"/>
+                        </svg>
+                    </div>
+                    <h3 class="dl-os-name">Linux</h3>
+                    <p class="dl-os-specs">Ubuntu, Debian, Fedora, Arch<br>x86_64 .tar.gz Binary</p>
+                    <a href="https://github.com/iamdulanga/file-organizer-pro/releases/latest" class="dl-btn" target="_blank" rel="noopener">
+                        <span>Download for Linux</span>
+                    </a>
+                </div>
+
+                <div class="download-card">
+                    <div class="dl-os-icon">
+                        <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="16 18 22 12 16 6"></polyline>
+                            <polyline points="8 6 2 12 8 18"></polyline>
+                        </svg>
+                    </div>
+                    <h3 class="dl-os-name">Python Source</h3>
+                    <p class="dl-os-specs">Python 3.10+ Native<br>Zero external dependencies</p>
+                    <a href="https://github.com/iamdulanga/file-organizer-pro" class="dl-btn" target="_blank" rel="noopener">
+                        <span>View Source Code</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- -------------------------------------------------------------
+             Section 5: Frequently Asked Questions (FAQ) - Google SERP Rich Snippets
+        -------------------------------------------------------------- -->
+        <section class="page-section" id="faq">
+            <div class="section-header">
+                <span class="section-badge">Help & Details</span>
+                <h2 class="section-title">Frequently Asked Questions</h2>
+                <p class="section-desc">Got questions about file safety, formats, or platforms? Everything you need to know about File Organizer Pro.</p>
+            </div>
+
+            <div class="faq-container">
+                <details class="faq-item" open>
+                    <summary class="faq-question">
+                        <span>Is File Organizer Pro really 100% free and open-source?</span>
+                        <svg class="faq-chevron" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </summary>
+                    <div class="faq-answer">
+                        Yes, File Organizer Pro is licensed under the MIT License. It is completely free for personal and commercial usage with zero paywalls, advertisements, or hidden telemetry.
+                    </div>
+                </details>
+
+                <details class="faq-item">
+                    <summary class="faq-question">
+                        <span>Will File Organizer Pro delete or overwrite any of my existing files?</span>
+                        <svg class="faq-chevron" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </summary>
+                    <div class="faq-answer">
+                        Never. The application features built-in duplicate collision protection. If a file with an identical name already exists in the destination category folder, File Organizer Pro automatically renames the new file to <code>filename (1).ext</code> to ensure no data is ever overwritten.
+                    </div>
+                </details>
+
+                <details class="faq-item">
+                    <summary class="faq-question">
+                        <span>Do I need to install Python to run File Organizer Pro?</span>
+                        <svg class="faq-chevron" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </summary>
+                    <div class="faq-answer">
+                        No. Standalone pre-compiled executable binaries are available for Windows (.exe), macOS (.app), and Linux (.tar.gz). You simply download and run the application without installing Python or dependencies.
+                    </div>
+                </details>
+
+                <details class="faq-item">
+                    <summary class="faq-question">
+                        <span>Can I undo the organization if files were moved by mistake?</span>
+                        <svg class="faq-chevron" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </summary>
+                    <div class="faq-answer">
+                        Yes. File Organizer Pro maintains a transaction memory log of every moved file. Clicking the "Undo Move" button immediately restores every file back to its exact prior location.
+                    </div>
+                </details>
+
+                <details class="faq-item">
+                    <summary class="faq-question">
+                        <span>Does File Organizer Pro send my data or file names to the internet?</span>
+                        <svg class="faq-chevron" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </summary>
+                    <div class="faq-answer">
+                        No. The tool runs 100% offline on your local computer. It makes zero internet requests, collects no personal data or telemetry, and never leaves a footprint outside your machine.
+                    </div>
+                </details>
+
+                <details class="faq-item">
+                    <summary class="faq-question">
+                        <span>Which operating systems are supported?</span>
+                        <svg class="faq-chevron" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </summary>
+                    <div class="faq-answer">
+                        File Organizer Pro runs on Windows 10 & 11, macOS 11+ (Intel and Apple Silicon), and all popular Linux distributions including Ubuntu, Fedora, Debian, and Arch Linux.
+                    </div>
+                </details>
+            </div>
+        </section>
+
+        <!-- -------------------------------------------------------------
+             CTA Banner
+        -------------------------------------------------------------- -->
+        <section class="cta-banner">
+            <h2>Ready to Declutter Your Digital Workspace?</h2>
+            <p>Download File Organizer Pro today. Fast, reliable, safe, and completely free forever.</p>
+            <div class="cta-group" style="justify-content: center; margin-bottom: 0;">
+                <a href="#download" class="btn-primary">
+                    <span class="btn-label">Get File Organizer Pro Now</span>
+                </a>
+                <a href="https://github.com/iamdulanga/file-organizer-pro" target="_blank" rel="noopener" class="nav-btn-gh" style="padding: 13px 22px; font-size: 0.95rem;">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
+                        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+                    </svg>
+                    <span>Star on GitHub</span>
+                </a>
+            </div>
+        </section>
         <footer class="app-footer">
             <div class="footer-left">
                 <span>Designed & Built by <strong>Dulanga Niroshan Dasanayake</strong></span>
