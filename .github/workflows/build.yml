@@ -1,0 +1,105 @@
+name: Multi-Platform Build & Release
+
+on:
+  push:
+    branches: [ main ]
+    tags: [ 'v*' ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            platform_name: windows
+            artifact_name: FileOrganizer-Windows-x64.exe
+          - os: macos-latest
+            platform_name: macos
+            artifact_name: FileOrganizer-macOS.zip
+          - os: ubuntu-latest
+            platform_name: linux
+            artifact_name: FileOrganizer-Linux-x64.tar.gz
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Linux GUI Dependencies
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y python3-tk python3-dev
+
+      - name: Install Python Build Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install --upgrade pyinstaller
+
+      - name: Build Windows Executable
+        if: runner.os == 'Windows'
+        run: |
+          pyinstaller --onefile --windowed --name "FileOrganizer-Windows-x64" file_organizer.py
+
+      - name: Build macOS App & Archive
+        if: runner.os == 'macOS'
+        run: |
+          pyinstaller --onefile --windowed --name "FileOrganizer" file_organizer.py
+          cd dist
+          if [ -d "FileOrganizer.app" ]; then
+            zip -r "FileOrganizer-macOS.zip" "FileOrganizer.app"
+          else
+            zip -r "FileOrganizer-macOS.zip" "FileOrganizer"
+          fi
+          cd ..
+
+      - name: Build Linux Binary & Archive
+        if: runner.os == 'Linux'
+        run: |
+          pyinstaller --onefile --windowed --name "FileOrganizer-Linux-x64" file_organizer.py
+          cd dist
+          tar -czvf "FileOrganizer-Linux-x64.tar.gz" "FileOrganizer-Linux-x64"
+          cd ..
+
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.platform_name }}-build
+          path: dist/${{ matrix.artifact_name }}
+          if-no-files-found: error
+
+  release:
+    name: Publish GitHub Release
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Download All Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: release-assets
+          merge-multiple: true
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: release-assets/*
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

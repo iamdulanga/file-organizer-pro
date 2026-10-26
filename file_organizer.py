@@ -1,13 +1,25 @@
 import os
+import sys
 import shutil
 import logging
 import threading
 import queue
+import subprocess
 from pathlib import Path
 from dataclasses import dataclass
 from typing import Dict, List, Tuple
 import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
+
+# ---------------------------------------------------------------------------
+# High-DPI Scaling (Windows)
+# ---------------------------------------------------------------------------
+if sys.platform == "win32":
+    try:
+        import ctypes
+        ctypes.windll.shcore.SetProcessDpiAwareness(1)
+    except Exception:
+        pass
 
 # ---------------------------------------------------------------------------
 # Logging Configuration
@@ -34,7 +46,18 @@ class MoveRecord:
 # File Organizer Logic & GUI
 # ---------------------------------------------------------------------------
 class FileOrganizerApp:
-    SYSTEM_FILES = {"desktop.ini", "thumbs.db", ".ds_store", "iconcache.db"}
+    # Operating system specific files and directories to ignore
+    SYSTEM_FILES = {
+        "desktop.ini", "thumbs.db", "iconcache.db",       # Windows
+        ".ds_store", ".localized",                        # macOS
+        ".directory"                                      # Linux
+    }
+
+    # Core project files to protect from being organized
+    PROJECT_PROTECTED_FILES = {
+        "file_organizer.py", "build_exe.bat", "build_mac.sh", "build_linux.sh",
+        "readme.md", ".gitignore", "fileorganizer.exe", "fileorganizer"
+    }
 
     def __init__(self, root: tk.Tk):
         self.root = root
@@ -43,7 +66,8 @@ class FileOrganizerApp:
         self.root.minsize(620, 480)
 
         # State variables
-        self.directory = tk.StringVar(value=str(Path.home() / "Downloads"))
+        default_folder = str(Path.home() / "Downloads")
+        self.directory = tk.StringVar(value=default_folder if Path(default_folder).exists() else str(Path.home()))
         self.status_var = tk.StringVar(value="Ready to organize files")
         self.percent_var = tk.StringVar(value="0%")
         self.details_var = tk.StringVar(value="")
@@ -77,26 +101,40 @@ class FileOrganizerApp:
             "Others": []
         }
 
+    def _get_system_font(self) -> str:
+        if sys.platform == "darwin":
+            return "Helvetica Neue"
+        elif sys.platform == "win32":
+            return "Segoe UI"
+        else:
+            return "DejaVu Sans"
+
     def apply_theme(self):
         style = ttk.Style(self.root)
         available_themes = style.theme_names()
-        if "vista" in available_themes:
+
+        if sys.platform == "darwin" and "aqua" in available_themes:
+            style.theme_use("aqua")
+        elif sys.platform == "win32" and "vista" in available_themes:
             style.theme_use("vista")
         elif "clam" in available_themes:
             style.theme_use("clam")
 
-        self.root.configure(bg="#F3F4F6")
+        font_family = self._get_system_font()
+        bg_main = "#F3F4F6"
+        self.root.configure(bg=bg_main)
 
         # Custom ttk styles
-        style.configure("Header.TLabel", font=("Segoe UI", 16, "bold"), background="#F3F4F6", foreground="#111827")
-        style.configure("Subheader.TLabel", font=("Segoe UI", 9), background="#F3F4F6", foreground="#6B7280")
+        style.configure("Header.TLabel", font=(font_family, 16, "bold"), background=bg_main, foreground="#111827")
+        style.configure("Subheader.TLabel", font=(font_family, 9), background=bg_main, foreground="#6B7280")
         style.configure("Card.TFrame", background="#FFFFFF", relief="flat")
-        style.configure("CardHeader.TLabel", font=("Segoe UI", 10, "bold"), background="#FFFFFF", foreground="#374151")
-        style.configure("CardText.TLabel", font=("Segoe UI", 9), background="#FFFFFF", foreground="#4B5563")
-        style.configure("Status.TLabel", font=("Segoe UI", 9, "bold"), background="#FFFFFF", foreground="#2563EB")
-        style.configure("Percent.TLabel", font=("Segoe UI", 9, "bold"), background="#FFFFFF", foreground="#4B5563")
+        style.configure("CardHeader.TLabel", font=(font_family, 10, "bold"), background="#FFFFFF", foreground="#374151")
+        style.configure("CardText.TLabel", font=(font_family, 9), background="#FFFFFF", foreground="#4B5563")
+        style.configure("Status.TLabel", font=(font_family, 9, "bold"), background="#FFFFFF", foreground="#2563EB")
+        style.configure("Percent.TLabel", font=(font_family, 9, "bold"), background="#FFFFFF", foreground="#4B5563")
 
     def build_ui(self):
+        font_family = self._get_system_font()
         main_container = tk.Frame(self.root, bg="#F3F4F6", padx=20, pady=16)
         main_container.pack(fill=tk.BOTH, expand=True)
 
@@ -115,7 +153,7 @@ class FileOrganizerApp:
         subtitle_label.pack(anchor=tk.W, pady=(2, 0))
 
         # Folder Selection Card
-        dir_card = tk.Frame(main_container, bg="#FFFFFF", padx=16, pady=14, relief="solid", bd=1)
+        dir_card = tk.Frame(main_container, bg="#FFFFFF", padx=16, pady=14)
         dir_card.configure(highlightbackground="#E5E7EB", highlightcolor="#E5E7EB", highlightthickness=1, bd=0)
         dir_card.pack(fill=tk.X, pady=(0, 12))
 
@@ -124,7 +162,7 @@ class FileOrganizerApp:
         dir_input_frame = tk.Frame(dir_card, bg="#FFFFFF")
         dir_input_frame.pack(fill=tk.X)
 
-        self.dir_entry = ttk.Entry(dir_input_frame, textvariable=self.directory, font=("Segoe UI", 9))
+        self.dir_entry = ttk.Entry(dir_input_frame, textvariable=self.directory, font=(font_family, 9))
         self.dir_entry.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=(0, 8))
 
         browse_btn = tk.Button(
@@ -134,7 +172,7 @@ class FileOrganizerApp:
             bg="#F3F4F6",
             fg="#1F2937",
             activebackground="#E5E7EB",
-            font=("Segoe UI", 9),
+            font=(font_family, 9),
             relief="groove",
             bd=1,
             padx=12,
@@ -175,7 +213,7 @@ class FileOrganizerApp:
             fg="#FFFFFF",
             activebackground="#1D4ED8",
             activeforeground="#FFFFFF",
-            font=("Segoe UI", 10, "bold"),
+            font=(font_family, 10, "bold"),
             relief="flat",
             padx=16,
             pady=8,
@@ -191,7 +229,7 @@ class FileOrganizerApp:
             fg="#FFFFFF",
             activebackground="#DC2626",
             activeforeground="#FFFFFF",
-            font=("Segoe UI", 9, "bold"),
+            font=(font_family, 9, "bold"),
             relief="flat",
             padx=12,
             pady=8,
@@ -208,7 +246,7 @@ class FileOrganizerApp:
             fg="#FFFFFF",
             activebackground="#EA580C",
             activeforeground="#FFFFFF",
-            font=("Segoe UI", 9, "bold"),
+            font=(font_family, 9, "bold"),
             relief="flat",
             padx=12,
             pady=8,
@@ -224,7 +262,7 @@ class FileOrganizerApp:
             bg="#E5E7EB",
             fg="#374151",
             activebackground="#D1D5DB",
-            font=("Segoe UI", 9),
+            font=(font_family, 9),
             relief="flat",
             padx=10,
             pady=8,
@@ -239,7 +277,7 @@ class FileOrganizerApp:
             bg="#E5E7EB",
             fg="#374151",
             activebackground="#D1D5DB",
-            font=("Segoe UI", 9),
+            font=(font_family, 9),
             relief="flat",
             padx=12,
             pady=8,
@@ -261,9 +299,9 @@ class FileOrganizerApp:
             "• Videos (.mp4, .mkv, .mov, .avi, .webm)\n"
             "• Archives (.zip, .rar, .7z, .tar, .gz, .iso)\n"
             "• Scripts & Source Code (.py, .js, .ts, .java, .cpp, .sh, .bat)\n"
-            "• Executables (.exe, .msi, .appimage) & Others (unrecognized extensions)"
+            "• Executables (.exe, .msi, .appimage, .dmg) & Others (unrecognized extensions)"
         )
-        cat_info = tk.Label(cat_card, text=info_text, justify=tk.LEFT, font=("Segoe UI", 8), bg="#FFFFFF", fg="#6B7280")
+        cat_info = tk.Label(cat_card, text=info_text, justify=tk.LEFT, font=(font_family, 8), bg="#FFFFFF", fg="#6B7280")
         cat_info.pack(anchor=tk.W)
 
     def browse_directory(self):
@@ -320,10 +358,35 @@ class FileOrganizerApp:
             self.status_var.set("Cancelling operation...")
             self.cancel_btn.config(state=tk.DISABLED)
 
+    def _is_self_or_protected(self, item: Path) -> bool:
+        """Self-protection: avoid moving the running app or core repo files."""
+        name_lower = item.name.lower()
+        if name_lower in self.PROJECT_PROTECTED_FILES:
+            return True
+        if name_lower.startswith("."):
+            return True
+
+        # Check against running executable/script path
+        try:
+            current_exec = Path(sys.executable).resolve()
+            if item.resolve() == current_exec:
+                return True
+        except Exception:
+            pass
+
+        try:
+            if "__file__" in globals():
+                script_path = Path(__file__).resolve()
+                if item.resolve() == script_path:
+                    return True
+        except Exception:
+            pass
+
+        return False
+
     def _organize_worker(self, target_dir: Path):
         logging.info(f"Starting organization for directory: {target_dir}")
         try:
-            # Collect top-level files only, skipping system files and category directories
             category_names = set(self.rules.keys())
             category_names.add("Others")
 
@@ -331,16 +394,22 @@ class FileOrganizerApp:
             for item in target_dir.iterdir():
                 try:
                     if item.is_file():
-                        if item.name.lower() in self.SYSTEM_FILES:
+                        name_lower = item.name.lower()
+                        if name_lower in self.SYSTEM_FILES or name_lower.startswith("._"):
                             logging.debug(f"Skipping system file: {item.name}")
                             continue
+
+                        if self._is_self_or_protected(item):
+                            logging.info(f"Skipping protected/self file: {item.name}")
+                            continue
+
                         candidate_files.append(item)
                 except (PermissionError, OSError) as e:
                     logging.warning(f"Error accessing item {item.name}: {e}")
 
             total_files = len(candidate_files)
             if total_files == 0:
-                self.msg_queue.put(("empty", "No files found to organize."))
+                self.msg_queue.put(("empty", "No files found to organize in the selected folder."))
                 return
 
             moved_records: List[MoveRecord] = []
@@ -368,7 +437,7 @@ class FileOrganizerApp:
 
                 self.msg_queue.put(("progress", index, total_files, file_path.name))
 
-            self.msg_queue.put(("complete", moved_records, errors_count, total_files))
+            self.msg_queue.put(("complete", moved_records, errors_count, total_files, target_dir))
 
         except Exception as e:
             logging.exception(f"Unexpected worker failure: {e}")
@@ -382,20 +451,30 @@ class FileOrganizerApp:
         last_batch = self.history.pop()
         undone_count = 0
         error_count = 0
+        touched_parents = set()
 
         for record in reversed(last_batch):
             try:
                 if record.new_path.exists():
-                    # Check if original path is taken now
                     safe_restore = record.original_path
                     if safe_restore.exists():
                         safe_restore = self._generate_unique_destination(record.original_path.parent, record.original_path.name)
                     shutil.move(str(record.new_path), str(safe_restore))
                     undone_count += 1
+                    touched_parents.add(record.new_path.parent)
                     logging.info(f"Undid move: {record.new_path} -> {safe_restore}")
             except Exception as err:
                 error_count += 1
                 logging.error(f"Error undoing {record.new_path}: {err}")
+
+        # Clean up empty category folders if left behind
+        for folder in touched_parents:
+            try:
+                if folder.is_dir() and not any(folder.iterdir()):
+                    folder.rmdir()
+                    logging.info(f"Removed empty category folder after undo: {folder.name}")
+            except OSError:
+                pass
 
         # Update Undo button state
         if not self.history:
@@ -410,7 +489,12 @@ class FileOrganizerApp:
             messagebox.showinfo("Log File", f"No log file has been created yet at:\n{LOG_FILE_PATH}")
             return
         try:
-            os.startfile(str(LOG_FILE_PATH))
+            if sys.platform == "win32":
+                os.startfile(str(LOG_FILE_PATH))
+            elif sys.platform == "darwin":
+                subprocess.run(["open", str(LOG_FILE_PATH)], check=False)
+            else:
+                subprocess.run(["xdg-open", str(LOG_FILE_PATH)], check=False)
         except Exception as e:
             messagebox.showerror("Error", f"Could not open log file: {e}")
 
@@ -429,7 +513,7 @@ class FileOrganizerApp:
                     self.details_var.set(f"Processing: {filename}")
 
                 elif msg_type == "complete":
-                    _, moved_records, errors, total = msg
+                    _, moved_records, errors, total, _ = msg
                     if moved_records:
                         self.history.append(moved_records)
                         self.undo_btn.config(state=tk.NORMAL, cursor="hand2")
