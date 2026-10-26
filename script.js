@@ -1,12 +1,19 @@
 // ---------------------------------------------------------------------------
-// File Organizer Pro — Interactive Showcase & Auto OS Detection
+// File Organizer Pro — Interactive Showcase, OS Detection & Live Download Stats
 // ---------------------------------------------------------------------------
 
 document.addEventListener('DOMContentLoaded', () => {
     initOSDetection();
     initDropdown();
     initInteractiveDemo();
+    initLiveGitHubStats();
+    initDownloadClickTracking();
 });
+
+// GitHub Repository Configuration
+const REPO_OWNER = "iamdulanga";
+const REPO_NAME = "file-organizer-pro";
+const RELEASES_BASE = `https://github.com/${REPO_OWNER}/${REPO_NAME}/releases/latest`;
 
 // ---------------------------------------------------------------------------
 // 1. Operating System Auto-Detection
@@ -19,8 +26,6 @@ function initOSDetection() {
 
     const userAgent = window.navigator.userAgent.toLowerCase();
     const platform = window.navigator.userAgentData?.platform?.toLowerCase() || window.navigator.platform?.toLowerCase() || '';
-
-    const RELEASES_BASE = "https://github.com/iamdulanga/file-organizer-pro/releases/latest";
 
     // Icons
     const windowsIconSvg = `
@@ -46,17 +51,20 @@ function initOSDetection() {
         downloadSubtext.textContent = "Standalone .zip • Native Apple App";
         osIcon.innerHTML = appleIconSvg;
         downloadBtn.href = `${RELEASES_BASE}`;
+        downloadBtn.setAttribute('data-platform', 'macOS');
     } else if (platform.includes('linux') || userAgent.includes('linux') || userAgent.includes('x11')) {
         downloadLabel.textContent = "Download for Linux";
         downloadSubtext.textContent = "Standalone .tar.gz • Universal Binary";
         osIcon.innerHTML = linuxIconSvg;
         downloadBtn.href = `${RELEASES_BASE}`;
+        downloadBtn.setAttribute('data-platform', 'Linux');
     } else {
         // Default to Windows
         downloadLabel.textContent = "Download for Windows";
         downloadSubtext.textContent = "Standalone .exe • No install required";
         osIcon.innerHTML = windowsIconSvg;
         downloadBtn.href = `${RELEASES_BASE}`;
+        downloadBtn.setAttribute('data-platform', 'Windows');
     }
 }
 
@@ -103,6 +111,8 @@ function initInteractiveDemo() {
     ];
 
     let isOrganizing = false;
+
+    if (!organizeBtn) return;
 
     organizeBtn.addEventListener('click', () => {
         if (isOrganizing) return;
@@ -179,3 +189,199 @@ function initInteractiveDemo() {
         undoBtn.disabled = true;
     });
 }
+
+// ---------------------------------------------------------------------------
+// 4. Live GitHub Releases API & Live Download Counter
+// ---------------------------------------------------------------------------
+async function initLiveGitHubStats() {
+    const heroDownloadsText = document.getElementById('hero-downloads-text');
+    const navDownloadsCount = document.getElementById('nav-downloads-count');
+    const statTotalDownloads = document.getElementById('stat-total-downloads');
+    const statLatestVer = document.getElementById('stat-latest-ver');
+    const ghStarCount = document.getElementById('gh-star-count');
+
+    const CACHE_KEY = "fo_github_stats_cache";
+    const CACHE_TTL = 10 * 60 * 1000; // 10 minutes cache
+
+    let cachedData = null;
+    try {
+        const raw = sessionStorage.getItem(CACHE_KEY);
+        if (raw) {
+            const parsed = JSON.parse(raw);
+            if (Date.now() - parsed.timestamp < CACHE_TTL) {
+                cachedData = parsed.data;
+            }
+        }
+    } catch (e) {
+        // Ignore cache storage errors
+    }
+
+    let stats = cachedData;
+
+    if (!stats) {
+        try {
+            // Fetch releases
+            const releasesResp = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/releases`);
+            if (releasesResp.ok) {
+                const releases = await releasesResp.json();
+                
+                let totalDownloads = 0;
+                let latestRelease = releases[0] || null;
+
+                releases.forEach(rel => {
+                    (rel.assets || []).forEach(asset => {
+                        totalDownloads += (asset.download_count || 0);
+                    });
+                });
+
+                // Fetch repo stars
+                let stars = 0;
+                try {
+                    const repoResp = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}`);
+                    if (repoResp.ok) {
+                        const repoData = await repoResp.json();
+                        stars = repoData.stargazers_count || 0;
+                    }
+                } catch (err) {
+                    // Ignore repo info failure
+                }
+
+                // Locate direct asset download URLs
+                let directAssets = {};
+                if (latestRelease && latestRelease.assets) {
+                    latestRelease.assets.forEach(asset => {
+                        const name = asset.name.toLowerCase();
+                        if (name.endsWith('.exe')) directAssets.windows = asset.browser_download_url;
+                        if (name.endsWith('.zip') || name.endsWith('.dmg')) directAssets.mac = asset.browser_download_url;
+                        if (name.endsWith('.tar.gz') || name.endsWith('.appimage')) directAssets.linux = asset.browser_download_url;
+                    });
+                }
+
+                stats = {
+                    totalDownloads: totalDownloads,
+                    latestVersion: latestRelease ? latestRelease.tag_name : "v2.1.0",
+                    stars: stars,
+                    directAssets: directAssets
+                };
+
+                try {
+                    sessionStorage.setItem(CACHE_KEY, JSON.stringify({ timestamp: Date.now(), data: stats }));
+                } catch (e) {}
+            }
+        } catch (error) {
+            console.warn("Could not retrieve live GitHub stats:", error);
+        }
+    }
+
+    // Apply live stats to UI if available
+    if (stats) {
+        const formattedTotal = stats.totalDownloads > 0 ? `${stats.totalDownloads.toLocaleString()}+` : "40+";
+
+        if (heroDownloadsText) heroDownloadsText.textContent = `⚡ ${formattedTotal} Downloads`;
+        if (navDownloadsCount) navDownloadsCount.textContent = `${formattedTotal} Downloads`;
+        if (statTotalDownloads) statTotalDownloads.textContent = formattedTotal;
+        if (statLatestVer) statLatestVer.textContent = stats.latestVersion || "v2.1.0";
+
+        if (ghStarCount && stats.stars > 0) {
+            ghStarCount.textContent = `★ ${stats.stars}`;
+            ghStarCount.style.display = "inline-block";
+        }
+
+        // Update direct download links for instant download
+        if (stats.directAssets) {
+            const btnWin = document.getElementById('dl-btn-windows');
+            const btnMac = document.getElementById('dl-btn-mac');
+            const btnLinux = document.getElementById('dl-btn-linux');
+            const primaryBtn = document.getElementById('primary-download-btn');
+
+            if (btnWin && stats.directAssets.windows) btnWin.href = stats.directAssets.windows;
+            if (btnMac && stats.directAssets.mac) btnMac.href = stats.directAssets.mac;
+            if (btnLinux && stats.directAssets.linux) btnLinux.href = stats.directAssets.linux;
+
+            // Update primary hero button if direct asset is available for detected OS
+            if (primaryBtn) {
+                const detectedPlatform = primaryBtn.getAttribute('data-platform');
+                if (detectedPlatform === 'Windows' && stats.directAssets.windows) {
+                    primaryBtn.href = stats.directAssets.windows;
+                } else if (detectedPlatform === 'macOS' && stats.directAssets.mac) {
+                    primaryBtn.href = stats.directAssets.mac;
+                } else if (detectedPlatform === 'Linux' && stats.directAssets.linux) {
+                    primaryBtn.href = stats.directAssets.linux;
+                }
+            }
+        }
+    }
+}
+
+// ---------------------------------------------------------------------------
+// 5. Outbound Download Click Tracking
+// ---------------------------------------------------------------------------
+function initDownloadClickTracking() {
+    const downloadElements = [
+        document.getElementById('primary-download-btn'),
+        document.getElementById('dl-btn-windows'),
+        document.getElementById('dl-btn-mac'),
+        document.getElementById('dl-btn-linux'),
+        document.getElementById('dl-btn-source'),
+        ...document.querySelectorAll('#os-menu .os-item')
+    ].filter(Boolean);
+
+    downloadElements.forEach(el => {
+        el.addEventListener('click', (e) => {
+            const platform = el.getAttribute('data-platform') || el.innerText.trim() || 'Unknown';
+            const url = el.getAttribute('href') || '';
+
+            recordDownloadEvent(platform, url);
+        });
+    });
+}
+
+function recordDownloadEvent(platform, url) {
+    // 1. Local Storage Metric tracking
+    try {
+        const STORAGE_KEY = "file_organizer_user_clicks";
+        const currentData = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{"totalClicks":0,"byPlatform":{}}');
+        currentData.totalClicks = (currentData.totalClicks || 0) + 1;
+        currentData.byPlatform[platform] = (currentData.byPlatform[platform] || 0) + 1;
+        currentData.lastClickedAt = new Date().toISOString();
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(currentData));
+
+        console.log(`%c[Download Tracked]%c ${platform} | URL: ${url}`, "color:#3B82F6;font-weight:bold;", "color:#94A3B8;");
+    } catch (e) {
+        // Ignore local storage error
+    }
+
+    // 2. Optional Google Analytics 4 integration
+    if (typeof window.gtag === 'function') {
+        window.gtag('event', 'file_download', {
+            platform: platform,
+            file_url: url
+        });
+    }
+
+    // 3. Optional Plausible / Umami integration
+    if (typeof window.plausible === 'function') {
+        window.plausible('Download', { props: { platform: platform } });
+    }
+}
+
+// ---------------------------------------------------------------------------
+// 6. Admin / User Diagnostic Console Helper
+// ---------------------------------------------------------------------------
+window.getFileOrganizerStats = function() {
+    try {
+        const local = JSON.parse(localStorage.getItem("file_organizer_user_clicks") || '{"totalClicks":0,"byPlatform":{}}');
+        const gh = JSON.parse(sessionStorage.getItem("fo_github_stats_cache") || '{}');
+        
+        console.group("📊 File Organizer Pro — Live Stats Summary");
+        console.log("GitHub Releases Total Downloads:", gh.data?.totalDownloads ?? "Check network");
+        console.log("Latest Release Tag:", gh.data?.latestVersion ?? "v2.1.0");
+        console.log("Site Button Clicks (This Browser):", local.totalClicks || 0);
+        console.log("Platform Breakdown (This Browser):", local.byPlatform || {});
+        console.log("Last Download Clicked:", local.lastClickedAt || "None yet");
+        console.groupEnd();
+        return { github: gh.data, localClicks: local };
+    } catch (e) {
+        return "Unable to parse stats.";
+    }
+};

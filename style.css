@@ -1113,3 +1113,114 @@ html, body {
     margin: 0 auto 28px;
 }
 
+/* -------------------------------------------------------------------------
+   Live Download Counters & Social Proof Badges
+------------------------------------------------------------------------- */
+.hero-badges-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+}
+
+.hero-badges-row .pill-badge {
+    margin-bottom: 0;
+}
+
+.download-pill {
+    background: rgba(59, 130, 246, 0.1);
+    border-color: rgba(59, 130, 246, 0.3);
+}
+
+.download-pill .pill-text {
+    color: var(--brand-blue);
+}
+
+.pill-dot.blue {
+    background: var(--brand-blue);
+    box-shadow: 0 0 8px var(--brand-blue);
+}
+
+.dl-nav-tag {
+    background: rgba(16, 185, 129, 0.12);
+    color: #34D399;
+    border-color: rgba(16, 185, 129, 0.25);
+    transition: all 0.2s ease;
+}
+
+@media (max-width: 640px) {
+    .dl-nav-tag {
+        display: none;
+    }
+}
+
+.gh-counter-pill {
+    font-size: 0.72rem;
+    padding: 2px 7px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 999px;
+    margin-left: 6px;
+    color: var(--brand-amber);
+    font-weight: 700;
+}
+
+/* Live Counter Strip in Download Section */
+.live-counter-strip {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    margin: 0 auto 40px auto;
+    padding: 16px 32px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    width: fit-content;
+    max-width: 100%;
+    flex-wrap: wrap;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+}
+
+.counter-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.counter-val {
+    font-family: var(--font-mono);
+    font-size: 1.45rem;
+    font-weight: 800;
+    color: var(--brand-blue);
+    line-height: 1.2;
+}
+
+.counter-lbl {
+    font-size: 0.76rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 4px;
+}
+
+.counter-sep {
+    width: 1px;
+    height: 32px;
+    background: var(--border-subtle);
+}
+
+@media (max-width: 640px) {
+    .counter-sep {
+        display: none;
+    }
+    .live-counter-strip {
+        gap: 16px;
+        padding: 14px 20px;
+    }
+}
+
+
