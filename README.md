@@ -114,9 +114,9 @@ This repository includes automated CI/CD (`.github/workflows/build.yml`):
 
 ---
 
-## 🤝 Code of Conduct
+## 🤝 Community & Contributing
 
-We are committed to providing a friendly, safe, and welcoming environment for all contributors and users. Please read our [Code of Conduct](CODE_OF_CONDUCT.md) before participating in this project.
+Contributions, bug reports, and feature suggestions are very welcome! Please review our [Contributing Guide](CONTRIBUTING.md) to get started, and read our [Code of Conduct](CODE_OF_CONDUCT.md) before participating.
 
 ---
 

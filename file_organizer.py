@@ -57,7 +57,7 @@ class FileOrganizerApp:
     PROJECT_PROTECTED_FILES = {
         "file_organizer.py", "build_exe.bat", "build_mac.sh", "build_linux.sh",
         "readme.md", ".gitignore", "fileorganizer.exe", "fileorganizer",
-        "code_of_conduct.md", "license"
+        "code_of_conduct.md", "license", "contributing.md"
     }
 
     def __init__(self, root: tk.Tk):
