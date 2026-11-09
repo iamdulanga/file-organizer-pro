@@ -114,6 +114,12 @@ This repository includes automated CI/CD (`.github/workflows/build.yml`):
 
 ---
 
+## 🤝 Code of Conduct
+
+We are committed to providing a friendly, safe, and welcoming environment for all contributors and users. Please read our [Code of Conduct](CODE_OF_CONDUCT.md) before participating in this project.
+
+---
+
 ## 📄 License
 
 This project is licensed under the MIT License.

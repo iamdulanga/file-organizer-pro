@@ -56,7 +56,8 @@ class FileOrganizerApp:
     # Core project files to protect from being organized
     PROJECT_PROTECTED_FILES = {
         "file_organizer.py", "build_exe.bat", "build_mac.sh", "build_linux.sh",
-        "readme.md", ".gitignore", "fileorganizer.exe", "fileorganizer"
+        "readme.md", ".gitignore", "fileorganizer.exe", "fileorganizer",
+        "code_of_conduct.md", "license"
     }
 
     def __init__(self, root: tk.Tk):
