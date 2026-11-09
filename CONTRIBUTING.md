@@ -35,7 +35,10 @@ This project and everyone participating in it is governed by our [Code of Conduc
 
 ### Reporting Bugs
 
-Before creating a bug report, please check existing [Issues](https://github.com/iamdulanga/file-organizer-pro/issues) to ensure the issue has not already been reported.
+> [!IMPORTANT]
+> If you believe you have discovered a security vulnerability, please **do not open a public issue**. Instead, follow our responsible disclosure process detailed in our [Security Policy](SECURITY.md).
+
+Before creating a general bug report, please check existing [Issues](https://github.com/iamdulanga/file-organizer-pro/issues) to ensure the issue has not already been reported.
 
 When creating a bug report, please include as much detail as possible:
 * **Operating System & Version** (e.g., Windows 11 23H2, macOS 14 Sonoma, Ubuntu 22.04 LTS).

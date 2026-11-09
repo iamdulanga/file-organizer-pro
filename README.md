@@ -116,7 +116,13 @@ This repository includes automated CI/CD (`.github/workflows/build.yml`):
 
 ## 🤝 Community & Contributing
 
-Contributions, bug reports, and feature suggestions are very welcome! Please review our [Contributing Guide](CONTRIBUTING.md) to get started, and read our [Code of Conduct](CODE_OF_CONDUCT.md) before participating.
+Contributions, bug reports, and feature suggestions are very welcome! Please review our [Contributing Guide](CONTRIBUTING.md) to get started, read our [Code of Conduct](CODE_OF_CONDUCT.md), and refer to our [Security Policy](SECURITY.md) for vulnerability reporting.
+
+---
+
+## 🔒 Security
+
+For security vulnerability disclosure, supported versions, and privacy guarantees, please see our [Security Policy](SECURITY.md).
 
 ---
 
